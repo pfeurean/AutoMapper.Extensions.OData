@@ -34,7 +34,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantExpandBuildingsFilterEqAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$expand=Buildings&$filter=Name eq 'One'&$orderby=Name desc", port));
@@ -50,7 +49,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantExpandBuildingsFilterNeAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$expand=Buildings&$filter=Name ne 'One'&$orderby=Name desc", port));
@@ -66,7 +64,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantFilterEqNoExpand(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$filter=Name eq 'One'", port));
@@ -82,7 +79,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantExpandBuildingsNoFilterAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$expand=Buildings&$orderby=Name desc", port));
@@ -98,7 +94,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantNoExpandNoFilterAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$orderby=Name desc", port));
@@ -114,7 +109,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantNoExpandFilterEqAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$filter=Name eq 'One'&$orderby=Name desc", port));
@@ -130,7 +124,6 @@ namespace Web.Tests
         [Theory]//Similar to test below but works if $select=Buildings is added to the query
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantExpandBuildingsSelectNameAndBuilderExpandBuilderExpandCityFilterNeAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$select=Buildings,Name&$expand=Buildings($select=Name,Builder;$expand=Builder($select=Name,City;$expand=City))&$filter=Name ne 'One'&$orderby=Name desc", port));
@@ -146,10 +139,9 @@ namespace Web.Tests
             }
         }
 
-        [Theory(Skip = "ProjectTo does not load expanded child collections. #3379")]
+        [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantExpandBuildingsExpandBuilderExpandCityFilterNeAndOrderBy(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$expand=Buildings($expand=Builder($expand=City))&$filter=Name ne 'One'&$orderby=Name desc", port));
@@ -167,7 +159,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantFilterEqAndOrderBy(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder,Tenant&$filter=name eq 'One L1'", port));
@@ -184,7 +175,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantFilterOnNestedPropertyAndOrderBy(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder,Tenant&$filter=Builder/Name eq 'Sam'&$orderby=Name asc", port));
@@ -201,7 +191,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityFilterOnPropertyAndOrderBy(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder($expand=City),Tenant&$filter=Name ne 'One L2'&$orderby=Name desc", port));
@@ -217,7 +206,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityFilterOnNestedNestedPropertyWithCount(string port)
         {
             string query = "/corebuilding?$top=5&$expand=Builder($expand=City),Tenant&$filter=Builder/City/Name eq 'Leeds'&$count=true";
@@ -240,7 +228,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityOrderByName(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder($expand=City),Tenant&$orderby=Name desc", port));
@@ -255,7 +242,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityOrderByNameThenByIdentity(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder($expand=City),Tenant&$orderby=Name desc,Identity", port));
@@ -270,7 +256,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityOrderByBuilderName(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder($expand=City),Tenant&$orderby=Builder/Name", port));
@@ -286,7 +271,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityOrderByBuilderNameSkip3Take1WithCount(string port)
         {
             string query = "/corebuilding?$skip=4&$top=1&$expand=Builder($expand=City),Tenant&$orderby=Name desc,Identity&$count=true";
@@ -310,7 +294,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderTenantExpandCityOrderByBuilderNameSkip3Take1NoCount(string port)
         {
             string query = "/corebuilding?$skip=4&$top=1&$expand=Builder($expand=City),Tenant&$orderby=Name desc,Identity";
@@ -334,7 +317,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingSelectName_WithoutOrder_WithoutTop(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$select=Name", port));
@@ -348,7 +330,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantOrderByCountOfReference(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$expand=Buildings&$orderby=Buildings/$count desc", port));
@@ -383,7 +364,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void CoreBuildingOrderByPropertyOfChildReferenceOfReference(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$expand=Builder($expand=City)&$orderby=Builder/City/Name desc", port));
@@ -399,7 +379,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantSelectName(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$select=Name&$expand=Buildings&$orderby=Name", port));
@@ -416,7 +395,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void OpsTenantExpandBuildingsFilterEqAndOrderBy_FirstBuildingHasValues(string port)
         {
             Test(await Get<OpsTenant>("/opstenant?$top=5&$select=Buildings&$expand=Buildings&$filter=Name eq 'One'&$orderby=Name desc", port));
@@ -435,7 +413,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingSelectNameExpandBuilder_Builder_ShouldBeNull(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$select=Name&$expand=Builder($select=Name)&$filter=name eq 'One L1'", port));
@@ -452,7 +429,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderSelectNamefilterEqAndOrderBy(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder($select=Name)&$filter=name eq 'One L1'", port));
@@ -471,7 +447,6 @@ namespace Web.Tests
         [Theory]
         [InlineData("16324")]
         [InlineData("19583")]
-        [InlineData("18664")]
         public async void BuildingExpandBuilderSelectNameExpandCityFilterEqAndOrderBy_CityShouldBeNull_BuilderNameShouldeSam_BuilderIdShouldBeZero(string port)
         {
             Test(await Get<CoreBuilding>("/corebuilding?$top=5&$expand=Builder($select=Name;$expand=City)&$filter=name eq 'One L1'", port));
@@ -484,6 +459,43 @@ namespace Web.Tests
                 Assert.Null(collection.First().Builder.City);
                 Assert.Equal("One L1", collection.First().Name);
                 Assert.Null(collection.First().Tenant);
+            }
+        }
+
+        [Theory]
+        [InlineData("16324")]
+        [InlineData("19583")]
+        public async void OpsTenantExpandBuildingsSelectNameAndBuilderExpandBuilderExpandCityFilterNeAndOrderBy_filterAndSortChildCollection(string port)
+        {
+            Test(await Get<OpsTenant>("/opstenant?$top=5&$select=Buildings,Name&$expand=Buildings($filter=Name ne 'Two L1';$orderby=Name;$select=Name,Builder;$expand=Builder($select=Name,City;$expand=City))&$filter=Name ne 'One'&$orderby=Name desc", port));
+
+            void Test(ICollection<OpsTenant> collection)
+            {
+                Assert.Equal(1, collection.Count);
+                Assert.Equal(2, collection.First().Buildings.Count);
+                Assert.Equal("Two L2", collection.First().Buildings.First().Name);
+                Assert.NotNull(collection.First().Buildings.First().Builder);
+                Assert.NotNull(collection.First().Buildings.First().Builder.City);
+                Assert.NotEqual(default, collection.First().Buildings.First().Builder.City.Name);
+                Assert.Equal("Two", collection.First().Name);
+            }
+        }
+
+        [Theory]
+        [InlineData("16324")]
+        [InlineData("19583")]
+        public async void OpsTenantExpandBuildingsExpandBuilderExpandCityFilterNeAndOrderBy_filterAndSortChildCollection(string port)
+        {
+            Test(await Get<OpsTenant>("/opstenant?$top=5&$expand=Buildings($filter=Name ne '';$orderby=Name desc;$expand=Builder($expand=City))&$filter=Name ne 'One'&$orderby=Name desc", port));
+
+            void Test(ICollection<OpsTenant> collection)
+            {
+                Assert.Equal(1, collection.Count);
+                Assert.Equal(3, collection.First().Buildings.Count);
+                Assert.Equal("Two L3", collection.First().Buildings.First().Name);
+                Assert.NotNull(collection.First().Buildings.First().Builder);
+                Assert.NotNull(collection.First().Buildings.First().Builder.City);
+                Assert.Equal("Two", collection.First().Name);
             }
         }
 
